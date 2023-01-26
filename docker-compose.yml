@@ -1,0 +1,8 @@
+version: "3.8"
+
+services:
+  hestia:
+    build:
+      context: "https://github.com/dkyeremeh/docker-hestia.git"
+    image: hestia:demo
+    network_mode: host
