@@ -2,7 +2,22 @@ version: "3.8"
 
 services:
   hestia:
+    # build: https://github.com/dkyeremeh/docker-hestia.git
     build:
-      context: "https://github.com/dkyeremeh/docker-hestia.git"
+      context: .
+      args:
+        - NAMED=yes
+
     image: hestia:demo
-    network_mode: host
+    command: [ "/bin/bash", "/etc/init.d/hestia", "start" ]
+    privileged: true
+    ports:
+      - "8083:8083"
+      - '53:53/udp'
+      - '53:53/tcp'
+      #     networks:
+      #       - traefik
+
+      # networks:
+      #   traefik:
+      #     external: true
