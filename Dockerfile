@@ -3,7 +3,7 @@ FROM ubuntu
 RUN apt update
 RUN apt install -y wget lsb-core nano
 
-WORKDIR /var/install
+WORKDIR /usr/loca/hestia/docker
 
 ## Download files
 RUN wget https://raw.githubusercontent.com/hestiacp/hestiacp/release/install/hst-install-ubuntu.sh
@@ -56,8 +56,6 @@ RUN bash hst-install-ubuntu.sh -f\
     --mysql ${MYSQL} \
     --postgresql ${POSTGRESQL}
 
-RUN mkdir -p scripts
-COPY scripts/* scripts
-RUN ls -la scripts
+COPY . .
 
-ENTRYPOINT  [ "/bin/sh", "/var/install/scripts/start.sh" ] 
+ENTRYPOINT container.entry.sh
