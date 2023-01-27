@@ -3,18 +3,7 @@
 Hestia running in docker
 
 ## Docker Compose
-```
-version: "3.8"
-
-services:
-  hestia:
-    # build: https://github.com/dkyeremeh/docker-hestia.git
-    build:
-      context: .
-      args:
-        - NAMED=yes
-    image: hestia:demo
-```
+Example of [docker-compose.yml](https://github.com/dkyeremeh/docker-hestia/blob/master/docker-compose.yml)
 
 
 Build Arguments
