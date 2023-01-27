@@ -1,25 +1,40 @@
 version: "3.8"
 
+x-build-config:
+  #Put your configuration here
+  &build-config
+  build:
+    context: .
+    args:
+      - NAMED=yes
+      - PHPFPM=yes
+    network: host
+  image: hestia:demo
+
 services:
+  # Main service
   hestia:
-    # build: https://github.com/dkyeremeh/docker-hestia.git
-    build:
-
-      context: .
-      args:
-        - NAMED=yes
-        - PHPFPM=yes
-
-    image: hestia:demo
+    <<: *build-config
+    container_name: hestia
+    command: start
     ports:
       - "8083:8083"
       - '53:53/udp'
       - '53:53/tcp'
-      # volumes:
-      #   - ./data/bind:/etc/bind
-      #     networks:
-      #       - traefik
+    volumes:
+      - ./data/home:/home
+      - ./data/hestia:/usr/local/hestia/data
 
-      # networks:
-      #   traefik:
-      #     external: true
+  #   networks:
+  #     - traefik
+
+
+  # This container is for copying data files. It's deleted afterwards
+  hestia.prepare:
+    <<: *build-config
+    container_name: hestia.prepare
+    command: prepare
+
+# networks:
+#   traefik:
+#     external: true
