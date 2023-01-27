@@ -1,16 +1,18 @@
 FROM ubuntu
 
 RUN apt update
-RUN apt install -y wget lsb-core
+RUN apt install -y wget lsb-core nano
 
 WORKDIR /var/install
 
+## Download files
 RUN wget https://raw.githubusercontent.com/hestiacp/hestiacp/release/install/hst-install-ubuntu.sh
 RUN wget https://raw.githubusercontent.com/gdraheim/docker-systemctl-replacement/master/files/docker/systemctl3.py -O /usr/local/bin/systemctl
 
 RUN chmod +x hst-install-ubuntu.sh
 RUN chmod +x /usr/local/bin/systemctl
 
+## Update installation files
 RUN sed -i s/"systemctl start"/"echo systemctl start"/g hst-install-ubuntu.sh
 RUN sed -i s/"systemctl restart"/"echo systemctl restart"/g hst-install-ubuntu.sh
 RUN sed -i s/"^.*can't create \$servername domain.*"//g hst-install-ubuntu.sh

@@ -4,17 +4,19 @@ services:
   hestia:
     # build: https://github.com/dkyeremeh/docker-hestia.git
     build:
+
       context: .
       args:
         - NAMED=yes
+        - PHPFPM=yes
 
     image: hestia:demo
-    command: [ "/bin/bash", "/etc/init.d/hestia", "start" ]
-    privileged: true
     ports:
       - "8083:8083"
       - '53:53/udp'
       - '53:53/tcp'
+      # volumes:
+      #   - ./data/bind:/etc/bind
       #     networks:
       #       - traefik
 
