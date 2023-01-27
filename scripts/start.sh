@@ -1,5 +1,6 @@
 #!/bin/sh
 
-/etc/init.d/hestia start
-
-tail -f /dev/null
+if [ "$1" == "start" ]; then
+    /etc/init.d/hestia start
+    tail -f /dev/null
+fi
